@@ -1,0 +1,26 @@
+{
+  "name": "kitty-irc",
+  "version": "0.0.1",
+  "description": "Small irc klient written in electron",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "lint": "eslint --init",
+    "start": "electron ."
+  },
+  "author": "Kornelia Kobiela",
+  "license": "MIT",
+  "dependencies": {
+    "electron": "^1.6.5",
+    "irc": "^0.5.2",
+    "pouchdb": "^6.2.0"
+  },
+  "devDependencies": {
+    "browserify": "^14.3.0",
+    "eslint": "^3.19.0",
+    "jsdoc": "^3.4.3",
+    "karma": "^1.6.0",
+    "karma-electron": "^5.1.1",
+    "mocha": "^3.2.0"
+  }
+}
