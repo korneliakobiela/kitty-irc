@@ -7,8 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "eslint --init",
     "start": "electron .",
-    "build": "browserify -t vueify babelify --presets es2015 -e src/main.js -o dist/kitty-irc.js ",
-    "watch": "watchify -t vueify babelify --presets es2015 -e src/main.js -o dist/kitty-irc.js "
+    "build": "browserify -t vueify -e src/main.js -o dist/kitty-irc.js -t babelify --presets es2015",
+    "watch": "watchify -t vueify -e src/main.js -o dist/kitty-irc.js -t babelify --presets es2015"
   },
   "author": {
     "name":"Kornelia Kobiela",
