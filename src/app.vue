@@ -20,7 +20,7 @@
     export default {
         data () {
             return {
-                msg: 'Hello kitty-irc!'
+                msg: 'Hello Cat!'
             }
         }
     }

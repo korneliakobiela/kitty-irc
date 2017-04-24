@@ -5,9 +5,10 @@
   "main": "main.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "lint": "eslint --init",
+    "lint": "eslint -c config/eslint/.eslintrc.json src/**.js",
     "start": "electron .",
-    "build": "node ./config/browserify/build"
+    "build": "node ./config/browserify/build",
+    "package": "electron-packager . --all --overwrite --ignore='(test|config|src)' --out=builds"
   },
   "author": {
     "name": "Kornelia Kobiela",
@@ -15,8 +16,8 @@
   },
   "contributors": [
     {
-        "name": "Adrian Wieprzkowicz",
-        "url": "https://github.com/Argeento"
+      "name": "Adrian Wieprzkowicz",
+      "url": "https://github.com/Argeento"
     }
   ],
   "license": "MIT",
@@ -31,6 +32,7 @@
     "babelify": "^7.3.0",
     "browserify": "^14.3.0",
     "browserify-hmr": "^0.3.5",
+    "electron-packager": "^8.6.0",
     "eslint": "^3.19.0",
     "jsdoc": "^3.4.3",
     "karma": "^1.6.0",
