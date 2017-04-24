@@ -1,10 +1,18 @@
 <template>
-    <h1 class="color">{{ msg }}</h1>
+    <div>
+        <h1 class="color">{{ msg }}</h1>
+        <p>SCSS: test!</p>
+    </div>
 </template>
 
-<style>
+<style lang="scss">
     .color {
         color: green;
+    }
+    div {
+        p {
+            font-family: monospace
+        }
     }
 </style>
 
