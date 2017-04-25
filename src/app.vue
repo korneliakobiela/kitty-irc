@@ -1,27 +1,38 @@
 <template>
     <div>
-        <h1 class="color">{{ msg }}</h1>
-        <p>SCSS: test!</p>
+        <div v-if="connected">
+            kitty-irc component<br>
+            | <br>
+            +-- channel chat <br>
+            +-- private chat <br>
+            +-- ... <br>
+        </div>
+        <login v-else @connect="connected = true"></login>
     </div>
 </template>
 
 <style lang="scss">
-    .color {
-        color: green;
+    body {
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'Roboto Mono', monospace;
     }
-    div {
-        p {
-            font-family: monospace
-        }
+
+    .btn {
+        cursor: pointer;
     }
 </style>
 
 <script>
+    import login from './components/login.vue'
+
     export default {
         data () {
             return {
-                msg: 'Hello Cat!'
+                connected: false
             }
+        },
+        components: {
+            login
         }
     }
 </script>
