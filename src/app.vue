@@ -16,7 +16,6 @@
         /*font-family: 'Roboto', sans-serif;*/
         font-family: 'Roboto Mono', monospace;
     }
-
     .btn {
         cursor: pointer;
     }
@@ -24,8 +23,6 @@
 
 <script>
     import login from './components/login.vue'
-    
-
     export default {
         data () {
             return {
