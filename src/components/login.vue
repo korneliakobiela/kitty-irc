@@ -1,6 +1,6 @@
 <template>
     <div class="login">
-        <h1>Hello cat!</h1>
+        <h1>Hello on Kitty-IRC!</h1>
 
         <form v-on:submit.prevent="connect">
 
@@ -50,8 +50,7 @@
         },
         methods: {
             // IRC
-            connect() {
-                // TODO
+
 
                 // if connected to irc network
                 this.$emit('connect', true)
