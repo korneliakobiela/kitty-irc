@@ -52,9 +52,17 @@
             // IRC
             connect() {
                 // TODO
+                var client = new irc.Client('chat.freenode.net', 'kitty-irc-user', {
+                    channels: ['#pasjainformatyki'],
+                });
 
+                client.join('#pasjainformatyki')
+
+                client.addListener('message', function (from, to, message) {
+                    console.log(from + ' => ' + to + ': ' + message);
+                });
                 // if connected to irc network
-                this.$emit('connect', true)
+                this.$emit('connect', true) // tyutaj trzeba wystawic referencje do obiektu client, i zlapac ja w app component
             },
 
             // NETWORK
