@@ -1,13 +1,7 @@
 <template>
-    <div>
-        <div v-if="connected">
-            kitty-irc component<br>
-            | <br>
-            +-- channel chat <br>
-            +-- private chat <br>
-            +-- ... <br>
-        </div>
-        <login v-else @connect="connected = true"></login>
+    <div >
+        <kitty-irc v-if="connected" :client="client"></kitty-irc>
+        <login v-else @connected="connect"></login>
     </div>
 </template>
 
@@ -22,15 +16,31 @@
 </style>
 
 <script>
-    import login from './components/login.vue'
+    import login from './components/login.vue';
+    import kittyIrc from './components/kitty-irc.vue';
+
     export default {
         data () {
             return {
-                connected: false
+                connected: false,
+                client: null
             }
         },
+
         components: {
-            login
+            login,
+            kittyIrc
+        },
+
+        methods: {
+            connect(args) {
+                const client = args[0];
+
+                this.connected = true;
+                this.client = client;
+            }
         }
     }
+
+
 </script>

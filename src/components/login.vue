@@ -6,15 +6,27 @@
 
             <div class="input-row">
                 <label for="nick">Nick</label>
-                <input class="input" id="nick" type="text" :value="nick">
+                <input class="input" id="nick" type="text" v-model="nick">
             </div>
 
             <div class="input-row">
                 <label for="network">Network</label>
-                <input class="input" id="network" type="text" :value="network">
+                <input class="input" id="network" type="text" v-model="network">
             </div>
 
-            <button class="btn btn--connect">Connect</button>
+            <div class="input-row">
+                <label for="channel">Channel</label>
+                <input class="input" id="channel" type="text" v-model="channel">
+            </div>
+
+            <div v-if="connecting" >
+                Connecting to server...
+            </div>
+            <div v-else>
+                <button class="btn btn--connect">Connect</button>
+            </div>
+
+
 
         </form>
 
@@ -44,26 +56,33 @@
     export default {
         data () {
             return {
-                nick: 'lorem',
-                network: 'freenode'
+                nick: 'kittyuser',
+                network: 'irc.freenode.net',
+                channel: '#kitty-irc',
+                connecting: false
             }
         },
         methods: {
             // IRC
 
             connect() {
-                // TODO
-                var client = new irc.Client('chat.freenode.net', 'kitty-irc-user', {
-                    channels: ['#pasjainformatyki'],
+                this.connecting = true
+
+                const client = new irc.Client(this.network, this.nick, {
+                    autoConnect: false,
+                    userName: 'kitty'
                 });
 
-                client.join('#pasjainformatyki')
-
-                client.addListener('message', function (from, to, message) {
-                    console.log(from + ' => ' + to + ': ' + message);
+                client.connect(1000, (serverReply) => {
+                    if (this.channel) {
+                        client.join(this.channel, () => {
+                            this.$emit('connected', [client]);
+                        })
+                    } else {
+                        this.$emit('connected', [client]);
+                    }
                 });
-                // if connected to irc network
-                this.$emit('connect', true) // tyutaj trzeba wystawic referencje do obiektu client, i zlapac ja w app component
+
             },
 
             // NETWORK

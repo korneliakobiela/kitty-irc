@@ -1,6 +1,6 @@
 {
   "name": "kitty-irc",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "Small irc klient written in electron",
   "main": "main.js",
   "scripts": {

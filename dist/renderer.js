@@ -1,1 +1,0 @@
-const irc = require('irc');
