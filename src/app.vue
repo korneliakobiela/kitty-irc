@@ -5,16 +5,6 @@
     </div>
 </template>
 
-<style lang="scss">
-    body {
-        /*font-family: 'Roboto', sans-serif;*/
-        font-family: 'Roboto Mono', monospace;
-    }
-    .btn {
-        cursor: pointer;
-    }
-</style>
-
 <script>
     import login from './components/login.vue';
     import kittyIrc from './components/kitty-irc.vue';
@@ -44,3 +34,13 @@
 
 
 </script>
+
+<style lang="scss">
+    body {
+        /*font-family: 'Roboto', sans-serif;*/
+        font-family: 'Roboto Mono', monospace;
+    }
+    .btn {
+        cursor: pointer;
+    }
+</style>

@@ -26,31 +26,9 @@
                 <button class="btn btn--connect">Connect</button>
             </div>
 
-
-
         </form>
-
     </div>
 </template>
-
-<style lang="scss" scoped>
-    .login {
-        font-family: 'Roboto';
-        text-align: center;
-    }
-    .input {
-        padding: 5px;
-        margin-left: 5px;
-    }
-    .input-row {
-        text-align: right;
-        width: 260px;
-        margin: 10px auto;
-    }
-    .btn--connect {
-        margin-top: 5px;
-    }
-</style>
 
 <script>
     export default {
@@ -97,3 +75,22 @@
         }
     }
 </script>
+
+<style lang="scss" scoped>
+    .login {
+        font-family: 'Roboto';
+        text-align: center;
+    }
+    .input {
+        padding: 5px;
+        margin-left: 5px;
+    }
+    .input-row {
+        text-align: right;
+        width: 260px;
+        margin: 10px auto;
+    }
+    .btn--connect {
+        margin-top: 5px;
+    }
+</style>
