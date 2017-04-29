@@ -119,7 +119,7 @@ export default {
             };
 
             // where to send message
-            let chat = this.getChatByName(from);
+            let chat = this.getChatByName(to);
 
             // if there is a new private message
             if (!chat) {
