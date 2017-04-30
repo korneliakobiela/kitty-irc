@@ -115,7 +115,17 @@ export default {
                 break;
                 case 'msg':
                     if (valueExists) {
-                        this.activeChat = this.addChat({ name: value });
+                        // where to send message
+                        let chat = this.getChatByName(value);
+
+                        // if there is a new private message
+                        if (!chat) {
+                            chat = this.addChat({ name: value });
+                        }
+
+                        console.log(this.chats)
+
+                        this.activeChat = chat;
                     }
                 break;
                 default: // help
@@ -162,9 +172,14 @@ export default {
             // where to send message
             let chat = this.getChatByName(to);
 
-            // if there is a new private message
-            if (!chat) {
-                chat = this.addChat({ name: from });
+            // if there is private message
+            if (to === this.client.nick) {
+                chat = this.getChatByName(from);
+
+                // if there is new private message
+                if (!chat) {
+                    chat = this.addChat({ name: from });
+                }
             }
 
             // push message to proper chat
