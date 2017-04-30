@@ -15,8 +15,8 @@
                         <div class="chat__nick">
                             {{ line.nick }}
                         </div>
-                        <div class="chat__message">
-                            {{ line.message }}
+                        <div class="chat__message" @click="onMessageClick" v-html="line.message">
+
                         </div>
                     </div>
                 </div>
@@ -29,6 +29,7 @@
 </template>
 
 <script>
+import parseMessage from '../helpers/parseMessage';
 export default {
     data() {
         return {
@@ -84,6 +85,16 @@ export default {
             }
         },
 
+        onMessageClick(event) {
+            event.preventDefault();
+
+            // if link is clicked
+            if (event.target.matches('.message__link')) {
+                shell.openExternal(event.target.href);
+            }
+
+        },
+
         sendMessage(event) {
             // save message
             const message = event.target.value;
@@ -91,22 +102,52 @@ export default {
             // clean input
             event.target.value = '';
 
-            // send message to irc network
-            this.client.say(this.activeChat.name, message);
+            if (/^\//.test(message)) { // there is a command
 
-            // create message for kitty-irc
-            const kittyMessage = {
-                time: new Date(),
-                nick: this.client.nick,
-                message
-            };
+                // get command and value
+                const [, command, value] = message.match(/^\/(\w*)(?: (\w*)){0,1}/);
+                const valueExists = typeof value !== 'undefined';
 
-            // push message to the active chat
-            this.activeChat.history.push(kittyMessage);
+                switch(command) {
+                case 'quit':
+                    this.client.disconnect();
+                    // TODO close something?
+                break;
+                case 'msg':
+                    if (valueExists) {
+                        this.activeChat = this.addChat({ name: value });
+                    }
+                break;
+                default: // help
+                    const kittyMessage = {
+                        time: new Date(),
+                        nick: 'kitty-irc',
+                        message: `
+                            <b>/quit</b> - rozłącz i zamknij <br>
+                            <b>/msg &lt;nick&gt;</b> - rozpocznij konwersację prywatną <br>
+                            <b>/join &lt;channel&gt;</b> - dołącz do kanału <br>
+                        `
+                    };
 
-            // regex ftw! /me <msg>, /join <channel> /msg <nick> ...
-            if (message === '/quit') {
-                this.client.disconnect()
+                    this.activeChat.history.push(kittyMessage);
+                break;
+                }
+
+
+            } else { // there is a normal message
+
+                // create message for kitty-irc
+                const kittyMessage = {
+                    time: new Date(),
+                    nick: this.client.nick,
+                    message: parseMessage(message)
+                };
+
+                // send message to irc network
+                this.client.say(this.activeChat.name, message);
+
+                // push message to the active chat
+                this.activeChat.history.push(kittyMessage);
             }
         },
 
@@ -115,7 +156,7 @@ export default {
             const kittyMessage = {
                 time: new Date(),
                 nick: from,
-                message
+                message: parseMessage(message)
             };
 
             // where to send message
@@ -181,6 +222,13 @@ export default {
             &--active {
                 text-decoration: underline;
             }
+        }
+    }
+
+    .message {
+        &__img {
+            width: 200px;
+            margin-top: 5px;
         }
     }
 </style>

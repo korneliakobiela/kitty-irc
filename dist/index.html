@@ -10,7 +10,10 @@
 <body>
     <div id="kitty-irc-app"></div>
 
-    <script>global.irc = require('irc');</script>
+    <script>
+        global.irc = require('irc');
+        global.shell = require('electron').shell;
+    </script>
     <script src="kitty-irc.js"></script>
 </body>
 </html>
