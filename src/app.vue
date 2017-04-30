@@ -36,6 +36,9 @@
 </script>
 
 <style lang="scss">
+    * {
+        box-sizing: border-box;
+    }
     body {
         /*font-family: 'Roboto', sans-serif;*/
         font-family: 'Roboto Mono', monospace;

@@ -105,8 +105,9 @@ export default {
             if (/^\//.test(message)) { // there is a command
 
                 // get command and value
-                const [, command, value] = message.match(/^\/(\w*)(?: (\w*)){0,1}/);
-                const valueExists = typeof value !== 'undefined';
+                const [, command, arg1, arg2] = message.match(/^\/([^ ]*)(?: ([^ ]*)){0,2}/);
+                const arg1Exists = typeof arg1 !== 'undefined';
+                const arg2Exists = typeof arg2 !== 'undefined';
 
                 switch(command) {
                 case 'quit':
@@ -114,18 +115,52 @@ export default {
                     // TODO close something?
                 break;
                 case 'msg':
-                    if (valueExists) {
+                    if (arg1Exists) {
+                        const nick = arg1;
+
                         // where to send message
-                        let chat = this.getChatByName(value);
+                        let chat = this.getChatByName(nick);
 
                         // if there is a new private message
                         if (!chat) {
-                            chat = this.addChat({ name: value });
+                            chat = this.addChat({ name: nick });
                         }
 
-                        console.log(this.chats)
-
                         this.activeChat = chat;
+                    }
+                break;
+                case 'join':
+                    // if there is channel name
+                    if (arg1Exists && arg1[0] === '#') {
+                        let channel = arg1;
+
+                        // if there is a password
+                        if (arg2Exists) {
+                            const paddowrd = arg2;
+                            channel += ` ${ passowrd }`;
+                        }
+
+                        let chat = this.getChatByName(channel);
+
+                        // if tehere is new chat, join to channel
+                        if (!chat) {
+                            this.client.join(channel, () => {
+
+                                // { name: arg1 } - "channel" may contain a password
+                                chat = this.addChat({ name: arg1 });
+                                this.activeChat = chat;
+                            });
+                        } else {
+                            this.activeChat = chat;
+                        }
+                    } else {
+                        const kittyMessage = {
+                            time: new Date(),
+                            nick: 'kitty-irc',
+                            message: 'Niepoprawna nazwa kanału'
+                        };
+
+                        this.activeChat.history.push(kittyMessage);
                     }
                 break;
                 default: // help
@@ -210,7 +245,7 @@ export default {
         }
 
         &__nick {
-            width: 90px;
+            width: 110px;
 
             text-align: right;
             color: tomato;
@@ -220,6 +255,10 @@ export default {
 
         &__message, &__nick, &__time {
             padding: 0 5px;
+        }
+
+        &__message {
+            width: calc(100% - 170px);
         }
 
     }
