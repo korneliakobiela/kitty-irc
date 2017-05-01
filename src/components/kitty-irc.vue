@@ -1,10 +1,14 @@
 <template lang="html">
     <div>
-        <ul class="chatlist">
-            <li v-for="chat in chats" @click="onChatListClick" class="chatlist__item">
-                {{ chat.name }}
-            </li>
-        </ul>
+
+        <div class="top-bar">
+            <ul class="chatlist">
+                <li v-for="chat in chats" @click="onChatListClick" class="chatlist__item">
+                    {{ chat.name }}
+                </li>
+            </ul>
+        </div>
+
         <div class="chat">
             <div class="chat__lines">
                 <div v-for="line in activeChat.history">
@@ -20,11 +24,14 @@
                         </div>
                     </div>
                 </div>
-
             </div>
-            {{ this.client.nick }}:
-            <input type="text" @keydown.enter="sendMessage">
         </div>
+
+        <div class="bottom-bar">
+            {{ this.client.nick }}:
+            <input class="message-input" type="text" @keydown.enter="sendMessage">
+        </div>
+
     </div>
 </template>
 
@@ -227,12 +234,14 @@ export default {
 <style lang="scss">
     .chat {
         font-size: 12px;
+        height: 80vh;
+        overflow-y: scroll;
+
+        border-top: 1px solid #aaa;
+        border-bottom: 1px solid #aaa;
 
         &__lines {
-            padding: 15px 0;
             margin: 10px 0;
-            border-bottom: 1px solid #aaa;
-            border-top: 1px solid #aaa;
         }
 
         &__line {
@@ -284,5 +293,22 @@ export default {
             width: 200px;
             margin-top: 5px;
         }
+
+        &__youtube-video {
+            margin-top: 5px;
+
+            $video-width: 450px;
+            width: $video-width;
+            height: $video-width / 1.7;
+        }
+    }
+
+    .message-input {
+        width: 500px;
+        padding: 5px;
+    }
+
+    .bottom-bar {
+        margin-top: 20px;
     }
 </style>
