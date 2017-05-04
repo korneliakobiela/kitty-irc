@@ -8,24 +8,29 @@
                 </li>
             </ul>
         </div>
+<div class="chat-container">
+    <div class="chat">
+        <div class="chat__lines">
+            <div v-for="line in activeChat.history">
+                <div class="chat__line">
+                    <div class="chat__time">
+                        [{{ line.time.toLocaleTimeString('pl') }}]
+                    </div>
+                    <div class="chat__nick">
+                        {{ line.nick }}
+                    </div>
+                    <div class="chat__message" @click="onMessageClick" v-html="line.message">
 
-        <div class="chat">
-            <div class="chat__lines">
-                <div v-for="line in activeChat.history">
-                    <div class="chat__line">
-                        <div class="chat__time">
-                            [{{ line.time.toLocaleTimeString('pl') }}]
-                        </div>
-                        <div class="chat__nick">
-                            {{ line.nick }}
-                        </div>
-                        <div class="chat__message" @click="onMessageClick" v-html="line.message">
-
-                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+    <user-list v-bind.prop="$props">
+        <!--TODO: Styling element -->
+    </user-list>
+</div>
+
 
         <div class="bottom-bar">
             {{ this.client.nick }}:
@@ -37,12 +42,16 @@
 
 <script>
 import parseMessage from '../helpers/parseMessage';
+import userList from './user-list.vue';
 export default {
     data() {
         return {
             chats: [],
-            activeChat: null
+            activeChat: null,
         }
+    },
+    components: {
+        userList
     },
 
     props: ['client'],
@@ -50,7 +59,6 @@ export default {
     created() {
         // add irc client listeners
         this.client.addListener('message', this.onReceiveMessage);
-
         // create chat if channel exists
         const chans = Object.keys(this.client.chans);
         if (chans.length > 0) {
@@ -232,6 +240,7 @@ export default {
 </script>
 
 <style lang="scss">
+
     .chat {
         font-size: 12px;
         height: 80vh;

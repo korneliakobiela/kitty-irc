@@ -9,6 +9,7 @@
     import login from './components/login.vue';
     import kittyIrc from './components/kitty-irc.vue';
 
+
     export default {
         data () {
             return {
