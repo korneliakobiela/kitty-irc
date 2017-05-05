@@ -1,7 +1,7 @@
 <template lang="html">
     <section id="chat-users" class="chat-users">
         <header>
-            Użytkownicy:
+            {{users}}
         </header>
         <ul  class="chat-user-list">
             <li v-for="nick in nicks">
@@ -16,6 +16,7 @@ export default {
 
     data() {
         return {
+            users: 'Użytkownicy',
             nicks:[]
         }
     },
@@ -23,18 +24,16 @@ export default {
     props: ['client'],
 
     created() {
-        this.client.addListener('names',function (channel, nicks) {
-            //TODO: Refactoring
-            console.log(Object.keys(nicks));
-        });
+        this.client.addListener('names',this.onNames);
         //this.client.addLisstener('names', this.onNames);
     },
 
     methods: {
         onNames(channel, nicks) {
-            Object.keys(nicks.forEach(
-                //TODO
-            );
+            Object.keys(nicks).forEach(this.addNick);
+        },
+        addNick(element) {
+            this.nicks.push(element);
         }
     }
 }
